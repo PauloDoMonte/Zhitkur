@@ -18,8 +18,6 @@ estado = True
 
 while estado:
     conn, addr = servidor.accept()
-    now = datetime.now()
-    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
     lista_clientes.append(conn)
     lista_addr.append(addr[0])

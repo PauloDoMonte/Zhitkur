@@ -9,7 +9,6 @@ cliente.connect((Ip,Porta))
 while True:
     mensagem = cliente.recv(2048)
     mensagem_decode = mensagem.decode()
-    print(mensagem_decode)
 
     if(mensagem_decode.upper() == "DETALHES DA MAQUINA"):
         lib_cliente.detalhes_da_maquina(cliente)

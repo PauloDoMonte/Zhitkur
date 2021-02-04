@@ -1,4 +1,16 @@
 from tkinter import *
+import socket
+
+lib_servidor.checagem_diretorios()
+
+lista_clientes = []
+lista_addr = []
+
+servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+Ip = "127.0.0.1"
+Porta = 3333
+servidor.bind((Ip,Porta))
+servidor.listen(100)
 
 class Application(Frame):
     def __init__(self, master=None):
