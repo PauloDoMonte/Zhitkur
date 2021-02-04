@@ -43,6 +43,17 @@ def salvar_arquivo(mensagem,dir):
         arquivo.writelines(mensagem)
         arquivo.close()
 
+def receber_arquivo(conn,dir):
+    arquivo = open(dir, "wb")
+    while True:
+        print("\nRecebendo arquivos...")
+        data = conn.recv(1024)
+        if data == b"OK":
+            print("\nArquivos recebidos")
+            break
+        arquivo.write(data)
+    arquivo.close()
+
 def manipulando(conn,addr):
     print("\nConectado com sucesso em {}".format(addr))
     while True:
