@@ -1,2 +1,2 @@
 # Zhitkur
-Uma shell reversa em python
+Um programa que permite uma shell reversa, consegue administrar n conexoes e futuramente terá a versão do servidor em modo gráfico
