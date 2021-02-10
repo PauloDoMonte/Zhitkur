@@ -1,2 +1,4 @@
-# Zhitkur 0.0.1
-Um programa que permite uma shell reversa, consegue administrar n conexoes e futuramente terá a versão do servidor em modo gráfico
+# Zhitkur
+Um conjunto de programas que permite uma shell reversa, podendo ser instalado em três tipos de maquinas, Windows, Linux e Android.
+Para compilar o cliente de cada maquina alvo siga a arquivo instrucoes.txt que estará na pasta de cada cliente.
+Estamos criando um servidor para rodar em ambiente Linux tanto no modo de texto quanto gráfico, futuramente pretendemos criar um servidor focado em Windows.
