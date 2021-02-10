@@ -1,5 +1,4 @@
 pygame
 keyboard
-numpy
-opencv-python
-pyautogui
+kivy
+buildozer
