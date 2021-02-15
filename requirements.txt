@@ -2,3 +2,5 @@ pygame
 keyboard
 kivy
 buildozer
+pyaes
+

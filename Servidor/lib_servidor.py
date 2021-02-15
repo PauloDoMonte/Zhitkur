@@ -21,7 +21,7 @@ def ajuda_alvo():
 
 # ========= Criar databases =========
 def criar_conexoes_db():
-    conn = sqlite3.connect('Database/conexoes.db')
+    conn = sqlite3.connect('Databases/conexoes.db')
     cursor = conn.cursor()
     cursor.execute("""
     CREATE TABLE conexoes(

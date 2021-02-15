@@ -1,4 +1,4 @@
-import socket, platform, os, keyboard, pygame, numpy, opencv-python, pyautogui
+import socket, platform, os, keyboard, pygame, numpy
 
 # ========= FUNCOES DE DESCOBERTA =========
 def detalhes_da_maquina(cliente):
